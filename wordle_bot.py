@@ -56,7 +56,7 @@ def filter_words(possible_letters, letter_counts, remaining_words):
     return [word for word in remaining_words if check_word(word, possible_letters, letter_counts)]
 
 
-def run_bot(words, initial_guess, hard_mode=False, threshold=3000, answer=''):
+def run_bot(words=all_words, initial_guess='arise', hard_mode=False, threshold=3000, answer=''):
     remaining_words = words[:]
     num_guesses = 0
     guess = ''
