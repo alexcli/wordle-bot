@@ -63,6 +63,7 @@ def run_bot(words=all_words, initial_guess='arise', hard_mode=False, threshold=3
     known_letters = ['', '', '', '', '']
     possible_letters = [set(string.ascii_lowercase) for i in range(5)]
     letter_counts = Counter()
+
     while len(remaining_words) > 1:
         if not guess:
             guess = initial_guess
@@ -88,21 +89,28 @@ def run_bot(words=all_words, initial_guess='arise', hard_mode=False, threshold=3
                     guess = candidate_guess
         else:
             guess = remaining_words[0]
+
         num_guesses += 1
-        print(f"Guess number {num_guesses}: {guess}")
+        print(f'Guess number {num_guesses}: {guess}')
+
         if answer:
             known_letters, other_letters = attempt(guess, answer)
         else:
-            print("Green letters? (enter five characters with underscores representing non-green letters)")
-            known_letters = [letter if letter != "_" else "" for letter in input().lower() if letter != " "]
-            if not "" in known_letters:
-                print(f"Found {''.join(known_letters)} in {num_guesses} guesses")
+            print('Green letters? (enter five characters with underscores representing non-green letters)')
+            known_letters = [letter if letter != '_' else '' for letter in input().lower() if letter != ' ']
+            if not '' in known_letters:
+                print(f'Found {"".join(known_letters)} in {num_guesses} guesses')
                 return
-            print("Yellow letters?")
+            print('Yellow letters?')
             other_letters = Counter([letter for letter in input().lower() if letter.isalpha()])
+
         possible_letters, letter_counts = parse_info(guess, known_letters, other_letters, possible_letters, letter_counts)
         remaining_words = filter_words(possible_letters, letter_counts, remaining_words)
         print(len(remaining_words), 'words remaining')
         if len(remaining_words) < 30:
             print(remaining_words)
-    print(f"Found {remaining_words[0]} in {num_guesses} guesses")
+    print(f'Found {remaining_words[0]} in {num_guesses} guesses')
+
+
+if __name__ == '__main__':
+    run_bot()
